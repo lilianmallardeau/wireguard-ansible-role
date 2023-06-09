@@ -1,0 +1,28 @@
+---
+- name: Install WireGuard
+  apt:
+    name: wireguard
+    state: present
+
+- name: Copy interface configuration file to /etc/wireguard/{{ wireguard_interface_name }}.conf
+  template:
+    src: wg-interface.conf.j2
+    dest: /etc/wireguard/{{ wireguard_interface_name }}.conf
+    owner: root
+    group: root
+    mode: 0600
+  notify: reload wireguard interface
+
+- name: Enable interface with wg-quick
+  service:
+    name: wg-quick@{{ wireguard_interface_name }}
+    state: started
+    enabled: yes
+
+- name: Generate public key from private key
+  shell: echo {{ wireguard_private_key }} | wg pubkey
+  changed_when: false
+  register: wireguard_public_key
+
+- debug:
+    msg: "WireGuard public key for interface {{ wireguard_interface_name }}: {{ wireguard_public_key.stdout }}"
