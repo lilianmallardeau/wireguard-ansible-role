@@ -12,7 +12,8 @@ Role Variables
 --------------
 
 ```yaml
-# Private key 
+# Private key. If empty (default), a new private key will be generated and saved on the server.
+# It will be reused next time for the same interface if the file exists.
 wireguard_private_key: <private_key>
 
 # Interface name
@@ -44,7 +45,6 @@ Example Playbook
   roles:
     - role: wireguard
       vars:
-        wireguard_private_key: kDK3ciMkq+WE1GiIGPRw6ryMUdsb6zGrAmi/8h6KIm0=
         wireguard_interface_name: wg0
         wireguard_ip_address: 10.0.0.1/24
         wireguard_listen_port: 51820

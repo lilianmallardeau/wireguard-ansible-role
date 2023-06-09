@@ -4,6 +4,36 @@
     name: wireguard
     state: present
 
+- block:
+    - name: Check if private key file exists
+      stat:
+        path: "{{ wireguard_private_key_path }}"
+      register: wireguard_private_key_file
+
+    - name: Read private key
+      command: cat {{ wireguard_private_key_path }}
+      register: private_key
+      changed_when: false
+      when: wireguard_private_key_file.stat.exists
+
+    - name: Generate a new private key
+      command: wg genkey
+      register: new_private_key
+      when: not wireguard_private_key_file.stat.exists
+
+    - name: Set wireguard_private_key
+      set_fact:
+        wireguard_private_key: "{{ private_key.stdout if wireguard_private_key_file.stat.exists else new_private_key.stdout }}"
+  when: wireguard_private_key | length == 0
+
+- name: Write private key to {{ wireguard_private_key_path }}
+  template:
+    src: private.key.j2
+    dest: "{{ wireguard_private_key_path }}"
+    owner: root
+    group: root
+    mode: 0600
+
 - name: Copy interface configuration file to /etc/wireguard/{{ wireguard_interface_name }}.conf
   template:
     src: wg-interface.conf.j2
@@ -20,7 +50,7 @@
     enabled: yes
 
 - name: Generate public key from private key
-  shell: echo {{ wireguard_private_key }} | wg pubkey
+  shell: wg pubkey < "{{ wireguard_private_key_path }}"
   changed_when: false
   register: wireguard_public_key
 
