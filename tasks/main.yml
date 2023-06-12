@@ -54,5 +54,6 @@
   changed_when: false
   register: wireguard_public_key
 
-- debug:
+- name: Print public key
+  debug:
     msg: "WireGuard public key for interface {{ wireguard_interface_name }}: {{ wireguard_public_key.stdout }}"

@@ -50,10 +50,10 @@ Example Playbook
         wireguard_listen_port: 51820
         wireguard_peers:
           - public_key: fK9L5i9Y/atI2qs7JGjMK2Ab6nccl/rrx+sUA11Zrgo=
-            allowed_ips: 10.0.0.2/24
+            allowed_ips: 10.0.0.2/32
             endpoint: example.com:51820
           - public_key: VT9WaisSQbwELinfBcIlGbFWtahePZyT92TgsIXX52M=
-            allowed_ips: 10.0.0.3/24
+            allowed_ips: 10.0.0.3/32
 ```
 
 License
