@@ -30,6 +30,7 @@ wireguard_peers:
   - public_key: <peer public key>
     allowed_ips: <peer allowed ip addresses>
     endpoint: <ip_addr:port>  # Optional, domain names can also used
+    keepalive: <keepalive>  # Optional, used to keep NAT port mappings alive
     psk: <preshared_key>  # Optional
 ```
 
