@@ -11,5 +11,8 @@ PublicKey = {{ peer.public_key }}
 {% if peer.endpoint is defined %}
 Endpoint = {{ peer.endpoint }}
 {% endif %}
+{% if peer.psk is defined %}
+PresharedKey = {{ peer.psk }}
+{% endif %}
 
 {% endfor %}
