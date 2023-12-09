@@ -23,7 +23,7 @@
 
     - name: Set wireguard_private_key
       set_fact:
-        wireguard_private_key: "{{ private_key.stdout if wireguard_private_key_file.stat.exists else new_private_key.stdout }}"
+        wireguard_private_key: "{{ wireguard_private_key_file.stat.exists | ternary(private_key.stdout, new_private_key.stdout) }}"
   when: wireguard_private_key | length == 0
 
 - name: Write private key to {{ wireguard_private_key_path }}

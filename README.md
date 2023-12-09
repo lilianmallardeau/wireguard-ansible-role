@@ -25,6 +25,12 @@ wireguard_ip_address: 10.0.0.1/24
 # Listen port
 wireguard_listen_port: 51820
 
+# PreUp, PostUp, PreDown and PostDown scripts
+wireguard_preup:
+wireguard_postup:
+wireguard_predown:
+wireguard_postdown:
+
 # Peers, empty by default
 wireguard_peers:
   - public_key: <peer public key>
