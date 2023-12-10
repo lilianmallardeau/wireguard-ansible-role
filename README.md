@@ -25,7 +25,13 @@ wireguard_ip_address: 10.0.0.1/24
 # Listen port
 wireguard_listen_port: 51820
 
-# PreUp, PostUp, PreDown and PostDown scripts
+# DNS (omitted by default)
+wireguard_dns:
+
+# MTU (omitted by default)
+wireguard_mtu:
+
+# PreUp, PostUp, PreDown and PostDown scripts (omitted by default)
 wireguard_preup:
 wireguard_postup:
 wireguard_predown:

@@ -2,6 +2,8 @@
 Address = {{ wireguard_ip_address }}
 PrivateKey = {{ wireguard_private_key }}
 ListenPort = {{ wireguard_listen_port }}
+{% if wireguard_dns %}DNS = {{ wireguard_dns }}{% endif %}
+{% if wireguard_mtu %}MTU = {{ wireguard_mtu }}{% endif %}
 {% if wireguard_preup %}PreUp = {{ wireguard_preup }}{% endif %}
 {% if wireguard_postup %}PostUp = {{ wireguard_postup }}{% endif %}
 {% if wireguard_predown %}PreDown = {{ wireguard_predown }}{% endif %}
