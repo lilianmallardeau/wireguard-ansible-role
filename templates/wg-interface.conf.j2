@@ -1,3 +1,9 @@
+{% macro multi_param(param_name, values) -%}
+{%- for value in values -%}
+{{ param_name }} = {{ value }}
+{% endfor %}
+{%- endmacro -%}
+
 [Interface]
 Address = {{ wireguard_ip_address }}
 PrivateKey = {{ wireguard_private_key }}
@@ -6,15 +12,10 @@ ListenPort = {{ wireguard_listen_port }}
 {% endif %}
 {% if wireguard_mtu %}MTU = {{ wireguard_mtu }}
 {% endif %}
-{% if wireguard_preup %}PreUp = {{ wireguard_preup }}
-{% endif %}
-{% if wireguard_postup %}PostUp = {{ wireguard_postup }}
-{% endif %}
-{% if wireguard_predown %}PreDown = {{ wireguard_predown }}
-{% endif %}
-{% if wireguard_postdown %}PostDown = {{ wireguard_postdown }}
-{% endif %}
-
+{{ multi_param("PreUp", wireguard_preup_list) -}}
+{{ multi_param("PostUp", wireguard_postup_list) -}}
+{{ multi_param("PreDown", wireguard_predown_list) -}}
+{{ multi_param("PostDown", wireguard_postdown_list)  }}
 
 {% for peer in wireguard_peers %}
 [Peer]
