@@ -18,6 +18,8 @@ ListenPort = {{ wireguard_listen_port }}
 {{ multi_param("PostDown", wireguard_postdown_list)  }}
 
 {% for peer in wireguard_peers %}
+{% if peer.name is defined %}# {{ peer.name }}
+{% endif %}
 [Peer]
 AllowedIPs = {{ peer.allowed_ips }}
 PublicKey = {{ peer.public_key }}
